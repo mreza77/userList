@@ -1,0 +1,9 @@
+{
+   "LAYOUT.MODAL.DELETE.TEXT": "Are you sure?",
+   "DEFAULT.YES": "Yes",
+   "DEFAULT.NO": "No",
+   "DEFAULT.SAVE": "Save",
+   "INPUT.FIRST.NAME":"First Name",
+   "INPUT.LAST.NAME":"Last Name",
+   "INPUT.EMAIL":"Email"
+}
