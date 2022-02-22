@@ -11,21 +11,27 @@ import { getSelectedUser, updateUsers } from "../../redux/reducers/userReducer";
 import colors from '../../config/colors';
 
 const EditBottomSheet = ({ visibleSheet }: any) => {
-    const [firstName, setFirstName] = useState<string>("")
-    const [lastName, setLastName] = useState<string>("")
-    const [email, setEmail] = useState<string>("")
-
+    const [data, setData] = useState({} as any)
     const [close, setClose] = useState<boolean>(false)
 
     const userData = useSelector(getSelectedUser);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        setFirstName(userData?.first_name)
-        setLastName(userData?.last_name)
-        setEmail(userData?.email)
-        setClose(false)
+        setData({
+            avatar: userData?.avatar,
+            first_name: userData?.first_name,
+            last_name: userData?.last_name,
+            id: userData?.id,
+            email: userData?.email
+        })
+        return () => { setClose(false) }
     }, [userData]);
+
+    const saveData = () => {
+        dispatch(updateUsers(data))
+        setClose(true)
+    }
 
     return (
         <CustomBottomSheet
@@ -35,32 +41,23 @@ const EditBottomSheet = ({ visibleSheet }: any) => {
             <View>
                 <CustomTextInput
                     inputName={nouns["INPUT.FIRST.NAME"]}
-                    onChangeText={(text: string) => setFirstName(text)}
-                    value={firstName}
+                    onChangeText={(text: string) => setData({ ...data, first_name: text })}
+                    value={data?.first_name}
                 ></CustomTextInput>
                 <CustomTextInput
                     inputName={nouns["INPUT.LAST.NAME"]}
-                    onChangeText={(text: string) => setLastName(text)}
-                    value={lastName}
+                    onChangeText={(text: string) => setData({ ...data, last_name: text })}
+                    value={data?.last_name}
                 ></CustomTextInput>
                 <CustomTextInput
                     inputName={nouns["INPUT.EMAIL"]}
-                    onChangeText={(text: string) => setEmail(text)}
-                    value={email}
+                    onChangeText={(text: string) => setData({ ...data, email: text })}
+                    value={data?.email}
                 ></CustomTextInput>
                 <View style={styles.buttonContainer}>
                     <CustomButton
                         text={nouns["DEFAULT.SAVE"]}
-                        onPress={() => {
-                            dispatch(updateUsers({
-                                avatar: userData?.avatar,
-                                first_name: firstName,
-                                last_name: lastName,
-                                id: userData?.id,
-                                email
-                            }))
-                            setClose(true)
-                        }}
+                        onPress={() => saveData()}
                         style={styles.button}
                     ></CustomButton>
                 </View>
