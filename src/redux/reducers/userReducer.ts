@@ -16,7 +16,7 @@ export const userSlice = createSlice({
       setUsers: (state, action) => {
          return {
             ...state,
-            users: action?.payload?.data?.data,
+            users: action?.payload,
          };
       },
       selectUser: (state, action) => {
@@ -27,6 +27,7 @@ export const userSlice = createSlice({
       },
       deleteUsers: (state, action) => {
          const newUsers = deleteUser(state.users, action?.payload)
+
          return {
             ...state,
             users: newUsers

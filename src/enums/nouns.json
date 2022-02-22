@@ -5,5 +5,6 @@
    "DEFAULT.SAVE": "Save",
    "INPUT.FIRST.NAME":"First Name",
    "INPUT.LAST.NAME":"Last Name",
-   "INPUT.EMAIL":"Email"
+   "INPUT.EMAIL":"Email",
+   "PULL.REFRESh":"pull refresh"
 }

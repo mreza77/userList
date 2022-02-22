@@ -10,28 +10,27 @@ import Screen from '../components/common/Screen';
 import CustomLoading from '../components/common/CustomLoading';
 import EditBottomSheet from '../components/BottomSheet/EditBottomSheet';
 import { setUsers, getUser } from "../redux/reducers/userReducer";
-
+import urls from '../services/urls.json';
+import nouns from '../enums/nouns.json';
 
 const HomeScreen = () => {
    const [visibleSheet, setVisibleSheet] = useState<boolean>(false)
    const [refresh, setRefresh] = useState<boolean>(false)
-   const [loading, setLoading] = useState<boolean>(true)
 
    const dispatch = useDispatch();
    const userData = useSelector(getUser);
 
    useEffect(() => {
-      getUserList();
+      !userData && getUserList();
    }, []);
 
    const getUserList = async () => {
-      dispatch(setUsers(await getData("users?page=1")))
-      setLoading(false)
+      dispatch(setUsers(await getData(urls.LISTING)))
    }
 
    return (
       <Screen>
-         {loading ?
+         {!userData ?
             <CustomLoading></CustomLoading>
             :
             <FlatList
@@ -50,7 +49,7 @@ const HomeScreen = () => {
                   <RefreshControl
                      refreshing={refresh}
                      onRefresh={() => getUserList()}
-                     title={"pull refresh"}
+                     title={nouns["PULL.REFRESh"]}
                      tintColor={colors.white}
                      titleColor={colors.white}
                   />
